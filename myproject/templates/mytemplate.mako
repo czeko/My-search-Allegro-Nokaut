@@ -2,13 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" xmlns:tal="http://xml.zope.org/namespaces/tal">
 <head>
 
-<h1>NOKAUT</h1>
-<h2> ${price_n} , ${url_n}</h2>
-
-<h1>ALLEGRO</h1>
-<h2> ${price_a} , ${url_a}</h2>
-
+<h2>Result:</h2>
 </head>
 <body>
+
+    <li>
+        ${price_n} zl
+    <a href=${url_n}>Nokaut</a>
+    </li>
+    <li>
+        Price : ${price_a} zl
+    <a href=${url_a}>Allegro</a>
+    </li>
+
 </body>
 </html>
