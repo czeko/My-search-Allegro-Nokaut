@@ -7,7 +7,7 @@
 <body>
 
     <li>
-        ${price_n} zl
+        Price :${price_n} zl
     <a href=${url_n}>Nokaut</a>
     </li>
     <li>
@@ -15,5 +15,12 @@
     <a href=${url_a}>Allegro</a>
     </li>
 
+    <br/>
+    %if price_a < price_n:
+        Cheaper is Allegro
+    %else:
+        Cheaper is Nokaut
+
+    %endif
 </body>
 </html>
