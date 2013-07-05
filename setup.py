@@ -18,6 +18,10 @@ requires = [
     'allegro'
 
     ]
+dependency_links = [
+    'https://github.com/czeko/nokaut/archive/master.tar.gz#egg=nokaut',
+    'https://github.com/czeko/allegro/archive/master.tar.gz#egg=allegro'
+    ]
 
 setup(name='MyProject',
       version='0.0',
@@ -38,7 +42,7 @@ setup(name='MyProject',
       zip_safe=False,
       test_suite='myproject',
       install_requires=requires,
-      dependency_links=['https://github.com/czeko/nokaut/archive/master.zip', 'https://github.com/czeko/allegro/archive/master.zip'],
+      dependency_links=dependency_links,
       entry_points="""\
       [paste.app_factory]
       main = myproject:main
