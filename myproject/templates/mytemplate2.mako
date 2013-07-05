@@ -3,13 +3,13 @@
 <head>
     <title></title>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="${request.static_url('myproject:static/allegro_nokaut_html-css/css/style.css')}">
+    <link rel="stylesheet" href="${request.static_path('myproject:static/allegro_nokaut_html-css/css/style.css')}">
 </head>
 <body>
     <div id="container">
         <div class="main_box">
             <div class="head">
-                <div class="logo_img"><img src="${request.static_url('myproject:static/allegro_nokaut_html-css/img/logo.png')}" alt="logo"></div>
+                <div class="logo_img"><img src="${request.static_path('myproject:static/allegro_nokaut_html-css/img/logo.png')}" alt="logo"></div>
                 <div class="logo_txt">
                     Compare products
                     <div class="logo_txt_small">We will help you find and compare products</div>
@@ -36,10 +36,10 @@
             </div>
         </div>
         <div class="footer">
-            <img src="${request.static_url('myproject:static/allegro_nokaut_html-css/img/logo_stx.png')}" alt="logo_stx"/>
+            <img src="${request.static_path('myproject:static/allegro_nokaut_html-css/img/logo_stx.png')}" alt="logo_stx"/>
         </div>
     </div>
-    <script type="text/javascript" src="${request.static_url('myproject:static/allegro_nokaut_html-css/js/jquery-1.8.3.min.js')}"></script>
+    <script type="text/javascript" src="${request.static_path('myproject:static/allegro_nokaut_html-css/js/jquery-1.8.3.min.js')}"></script>
     <script type="text/javascript">
     $(document).ready(function() {
         var btn_search = $('.search input');

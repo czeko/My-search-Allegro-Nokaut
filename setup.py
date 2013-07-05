@@ -14,6 +14,9 @@ requires = [
     'pyramid_debugtoolbar',
     'zope.sqlalchemy',
     'waitress',
+    'nokaut',
+    'allegro'
+
     ]
 
 setup(name='MyProject',
@@ -35,6 +38,7 @@ setup(name='MyProject',
       zip_safe=False,
       test_suite='myproject',
       install_requires=requires,
+      dependency_links=['https://github.com/czeko/nokaut/archive/master.zip', 'https://github.com/czeko/allegro/archive/master.zip'],
       entry_points="""\
       [paste.app_factory]
       main = myproject:main
