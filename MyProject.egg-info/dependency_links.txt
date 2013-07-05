@@ -1,2 +1,0 @@
-https://github.com/czeko/nokaut/archive/master.tar.gz#egg=nokaut
-https://github.com/czeko/allegro/archive/master.tar.gz#egg=allegro
