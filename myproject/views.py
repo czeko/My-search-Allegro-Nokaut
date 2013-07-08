@@ -4,21 +4,25 @@ from sqlalchemy.exc import DBAPIError
 
 from .models import (
     DBSession,
-    MyModel,
+    Product,
+    User
     )
 
 from nokaut.lib import nokaut_api, NokautError
 from allegro.lib import downolad_data, AllegroError
 
+from pyramid.authentication import AuthTktAuthenticationPolicy
+from pyramid.authorization import ACLAuthorizationPolicy
 
-@view_config(route_name='home', renderer='myproject:templates/mytemplate2.mako')
+import datetime
+
+@view_config(route_name='home', renderer='myproject:templates/base.mako')
 def my_view2(request):
     return {}
 
 
-@view_config(route_name='compare', renderer='myproject:templates/mytemplate.mako')
+@view_config(route_name='compare', renderer='myproject:templates/search.mako')
 def my_view(request):
-    #import ipdb; ipdb.set_trace()
     product = request.GET.get('product')
     nokaut_key = request.registry.settings.get('nokaut.key')
 
@@ -55,3 +59,4 @@ def my_view(request):
         response['nokaut']['url'] = url_n
 
     return response
+
