@@ -4,14 +4,12 @@ import datetime
 from pyramid.response import Response
 from pyramid.view import view_config, forbidden_view_config
 from sqlalchemy.exc import DBAPIError
-from pyramid_handlers import action
 from pyramid.exceptions import Forbidden
 from pyramid.security import Authenticated
 from .models import (
     DBSession,
     User,
     Product,
-    update
     )
 from pyramid.security import (
     remember,
