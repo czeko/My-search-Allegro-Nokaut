@@ -1,12 +1,12 @@
-<%inherit file="mytemplate2.mako"/>
-<%block name="result">
-<div>
-    DZIALAA !@!!!
-    <ul>
-    % for o in objs:
-        <li>!!!!${o.name}!!!</li>
-    % endfor
+{% macro render_field(field) %}
+  <dt>{{ field.label }}
+  <dd>{{ field(**kwargs)|safe }}
+  {% if field.errors %}
+    <ul class=errors>
+    {% for error in field.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
     </ul>
-
-</div>
-</%block>
+  {% endif %}
+  </dd>
+{% endmacro %}

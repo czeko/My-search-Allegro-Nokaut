@@ -11,7 +11,7 @@ from pyramid.paster import (
 
 from ..models import (
     DBSession,
-    Product,
+    Products,
     Base,
     User
     )
@@ -34,13 +34,13 @@ def main(argv=sys.argv):
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)
     with transaction.manager:
-        model_p = Product(
+        model_p = Products(
             name='one',
             price_a=1,
             url_a='http://allegro.pl',
-            price_n=1,
-            url_n='http://nokaut.pl',
-            user_id=0
+            price_n=None,
+            url_n=None,
+
         )
         model_u = User(
             login='mal',

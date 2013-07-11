@@ -15,7 +15,7 @@ requires = [
     'zope.sqlalchemy',
     'waitress',
     'nokaut',
-    'allegro'
+    'allegro', 'wtforms'
 
     ]
 dependency_links = [
