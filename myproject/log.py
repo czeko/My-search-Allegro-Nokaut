@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
-"""
-Forms for register users
-"""
 import wtforms as wtf
-from wtforms import validators, Form, BooleanField, TextField, PasswordField, ValidationError
-from pyramid.i18n import TranslationStringFactory
+from wtforms import validators, TextField, PasswordField, ValidationError
 
 from myproject.models import User, DBSession
 

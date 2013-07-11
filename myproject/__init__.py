@@ -49,6 +49,7 @@ def main(global_config, **settings):
     config.add_route('logout', '/logout')
     config.add_route('forbidden', '/forbidden')
     config.add_route('history', '/history')
+    config.add_route('popular', '/popular')
     config.set_authentication_policy(authn_policy)
     config.set_authorization_policy(authz_policy)
     config.scan()

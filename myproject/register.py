@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Forms for register users
-"""
-import wtforms as wtf
-from wtforms import validators, Form, BooleanField, TextField, PasswordField, ValidationError
+from wtforms import validators, Form,  TextField, PasswordField, ValidationError
 
 from myproject.models import User, DBSession
 

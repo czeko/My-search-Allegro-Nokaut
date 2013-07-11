@@ -10,7 +10,8 @@ from pyramid.security import Authenticated
 from .models import (
     DBSession,
     User,
-    Products
+    Product,
+    update
     )
 from pyramid.security import (
     remember,
@@ -24,6 +25,7 @@ from nokaut.lib import nokaut_api, NokautError
 from allegro.lib import downolad_data, AllegroError
 from register import RegisterForm
 from log import LoginForm
+
 
 @view_config(route_name='home', renderer='myproject:templates/base.mako', permission='all')
 def my_view2(request):
@@ -40,31 +42,50 @@ def my_view(request):
             status='NO_ITEM'
         )
 
-    product = DBSession.query(Products).filter(Products.name == product_name).order_by(Products.time.desc()).first()
+    product = DBSession.query(Product).filter(Product.name == product_name, Product.user_id == request.user.id).order_by(Product.time.desc()).first()
 
-    if (product is None) or ((datetime.datetime.now() - product.time).days > 3):
+    if product is None:
         try:
             url_a, price_a = downolad_data(product_name)
         except AllegroError as e:
-            url_a = None
+            url_a = '#'
             price_a = None
         try:
             price_n, url_n = nokaut_api(nokaut_key, product_name)
         except NokautError as e:
+            url_n = '#'
+            price_n = None
+
+        product = Product(
+            name=product_name,
+            price_a=price_a,
+            url_a=url_a,
+            price_n=price_n,
+            url_n=url_n,
+            user_id=request.user.id,
+            count=1
+        )
+        DBSession.add(product)
+
+    elif (datetime.datetime.now() - product.time).days > 2:
+        try:
+            url_a, price_a = downolad_data(product_name)
+        except AllegroError:
+            url_a = None
+            price_a = None
+        try:
+            price_n, url_n = nokaut_api(nokaut_key, product_name)
+        except NokautError:
             url_n = None
             price_n = None
 
-        product = Products(
-            product_name,
-            price_a,
-            url_a,
-            price_n,
-            url_n,
-        )
+            product.price_a=price_a,
+            product.url_a=url_a,
+            product.price_n=price_n,
+            product.url_n=url_n,
+            product.count +=1
 
-        DBSession.add(product)
-
-
+    product.count +=1
     response = dict(
             status='OK',
             allegro=dict(),
@@ -92,12 +113,10 @@ def register(request):
         password2 = form.password2.data
         if not login or not password or password != password2:
             return {}
-
-        DBSession.add(User(login, password))
-        user = DBSession.query(User).filter(User.login == login)\
-                                    .filter(User.password == password)\
-                                    .first()
-        headers = remember(request, user.id)
+        model = User(login=login, password=password)
+        DBSession.add(model)
+        DBSession.flush()
+        headers = remember(request, model.id)
         return HTTPFound(location='/welcome',
                          headers=headers)
 
@@ -142,12 +161,20 @@ def logout(request):
     headers = forget(request)
     return HTTPFound('/', headers=headers)
 
+
 @view_config(route_name='history', renderer='myproject:templates/history.mako' )
 def history(request):
-    #import ipdb; ipdb.set_trace()
-    objs = DBSession.query(Products).filter(Products.user_id == request.user.id).order_by(Products.time.desc()).all()
+    objs = DBSession.query(Product).filter(Product.user_id == request.user.id).order_by(Product.time.desc()).all()
     return dict(
         objs=objs
+    )
+
+
+@view_config(route_name='popular', renderer='myproject:templates/history.mako' )
+def popular(request):
+    objs = DBSession.query(Product).filter(Product.user_id == request.user.id).order_by(Product.count.desc()).all()
+    return dict(
+        objs=objs[:3]
     )
 
 

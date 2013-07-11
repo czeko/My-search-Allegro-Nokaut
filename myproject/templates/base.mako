@@ -36,6 +36,7 @@
                         <button class="btn_search btn btn-primary" type=submit>Search</button>
                     </form>
                     <a class="btn" href="/history">Historia wyszukiwania</a>
+                    <a class="btn" href="/popular">3 najpopularniejsze</a>
                     <div class="clear"></div>
                 </div>
                 <%block name='history'/>

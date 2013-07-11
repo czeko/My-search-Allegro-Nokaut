@@ -16,8 +16,12 @@
                 <a href=${allegro['url']}>
                     <img src="${request.static_path('myproject:static/img/logo_allegro.png')}" alt="logo_allegro"/>
                 </a>
-                     % if nokaut['price'] > allegro['price']:
-                        <div class="price win">${allegro['price']} zł</div>
+                     % if (allegro['price'] is not None and nokaut['price'] is not None \
+                          and allegro['price'] < nokaut['price']) or\
+                          (allegro['price'] is not None and nokaut['price'] is None):
+                         <div class="price win">${nokaut['price']} zł</div>
+                     % elif allegro['price'] is None:
+                         <div class="price">No result</div>
                      % else:
                         <div class="price">${allegro['price']} zł</div>
                      % endif
@@ -28,8 +32,12 @@
                 <a href=${nokaut['url']}>
                     <img src="${request.static_path('myproject:static/img/logo_nokaut.png')}" alt="logo_nokaut"/>
                 </a>
-                     % if nokaut['price'] < allegro['price']:
-                        <div class="price win">${nokaut['price']} zł</div>
+                     % if (nokaut['price'] is not None and allegro['price'] is not None \
+                          and nokaut['price'] < allegro['price'])or\
+                          (nokaut['price'] is not None and allegro['price'] is None):
+                         <div class="price win">${nokaut['price']} zł</div>
+                     % elif nokaut['price'] is None:
+                         <div class="price">No result</div>
                      % else:
                         <div class="price">${nokaut['price']} zł</div>
                      % endif

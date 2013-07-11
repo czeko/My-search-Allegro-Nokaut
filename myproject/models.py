@@ -1,22 +1,19 @@
+from datetime import datetime
+
+
 from sqlalchemy import (
     Column,
     Integer,
     Text,
     DateTime,
     ForeignKey,
-    Table
     )
-
 from sqlalchemy.ext.declarative import declarative_base
-
 from sqlalchemy.orm import (
     scoped_session,
     sessionmaker,
     relationship,
-    backref
     )
-from datetime import datetime
-
 from zope.sqlalchemy import ZopeTransactionExtension
 
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
@@ -32,8 +29,8 @@ class Product(Base):
     price_n = Column(Integer)
     url_n = Column(Text)
     time = Column(DateTime, default=datetime.now, onupdate=datetime.now)
-    user_id = Column(Integer, ForeignKey(User.id), nullable=False)
-    count = Column(Integer, default=1)
+    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
+    count = Column(Integer)
 
 
 class User(Base):
