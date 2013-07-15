@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from wtforms import validators, Form,  TextField, PasswordField, ValidationError
+from wtforms import validators, Form, TextField, PasswordField, ValidationError
 
 from myproject.models import User, DBSession
 
@@ -17,5 +17,3 @@ class RegisterForm(Form):
         validators.EqualTo('password2', message='Passwords must match')
     ])
     password2 = PasswordField('Repeat Password')
-
-

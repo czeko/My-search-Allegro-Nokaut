@@ -56,6 +56,7 @@
             $(this).attr('value','');
         });
     });
-    </script>
+ </script>
+
 </body>
 </html>

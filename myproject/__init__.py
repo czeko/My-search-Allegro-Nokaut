@@ -8,7 +8,6 @@ from .utils.request import MyRequest
 from .models import DBSession, Base, User
 
 
-
 class Root(object):
     __acl__ = [
         (Allow, Everyone, 'all'),
@@ -18,6 +17,7 @@ class Root(object):
     def __init__(self, request):
         self.request = request
 
+
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
@@ -26,7 +26,7 @@ def main(global_config, **settings):
             user = DBSession.query(User).filter(User.id == userid).first()
             if user:
                 group = 'g:%s' % user.group
-                frst = {'userid':[group]}
+                frst = {'userid': [group]}
                 return frst.get('userid')
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)

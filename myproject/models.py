@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from datetime import datetime
 
 
@@ -30,7 +32,7 @@ class Product(Base):
     url_n = Column(Text)
     time = Column(DateTime, default=datetime.now, onupdate=datetime.now)
     user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
-    count = Column(Integer)
+    count = Column(Integer, default=1)
 
 
 class User(Base):

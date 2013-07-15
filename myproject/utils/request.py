@@ -4,6 +4,7 @@ from pyramid.decorator import reify
 
 from myproject.models import DBSession, User
 
+
 class MyRequest(Request):
     @reify
     def user(self):
