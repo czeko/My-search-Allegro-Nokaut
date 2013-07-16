@@ -2,20 +2,9 @@
 
 from datetime import datetime
 
-
-from sqlalchemy import (
-    Column,
-    Integer,
-    Text,
-    DateTime,
-    ForeignKey,
-    )
+from sqlalchemy import Column, Integer, Text, DateTime, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import (
-    scoped_session,
-    sessionmaker,
-    relationship,
-    )
+from sqlalchemy.orm import scoped_session, sessionmaker, relationship
 from zope.sqlalchemy import ZopeTransactionExtension
 
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))

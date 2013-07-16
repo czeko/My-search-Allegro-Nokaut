@@ -25,35 +25,3 @@
 
 
 </%block>
-
-<script type="text/javascript" src="${request.static_path('myproject:static/js/jquery-1.8.3.min.js')}"></script>
-
-
-
-
-
-
-
-
-    <script type="text/javascript">
-    $(document).ready(function() {
-        $('button.btn_search').hover(function(e){
-            $.get()
-            return false;
-        })
-    });
-    </script>
-
-document).ready(function() {
-
-        var callback = function(){
-            alert('a');
-        };
-        var $buttons = ;
-
-        $('button.btn_search').hover(function(e){
-            alert('a');
-            return false;
-        })
-
-
