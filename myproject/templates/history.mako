@@ -1,6 +1,5 @@
 <%inherit file="base.mako"/>
 
-
 <%block name="history">
 
                 <table cellpadding="0" celllspacing="0" border="0" class="list">
@@ -23,17 +22,6 @@
                     </tr>
                     %endfor
                 </table>
-
-
-    <script type="text/javascript" src="${request.static_path('myproject:static/js/jquery-1.8.3.min.js')}"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-          $(".more").click(function(){
-            $(this).animate({left:'250px'});
-          });
-        });
-
-    </script>
 
 <script type="text/javascript">
     var $spinner = $('<img>', {src: '/static/img/4-0.gif'});
