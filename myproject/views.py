@@ -25,6 +25,7 @@ def my_view2(request):
 
 @view_config(route_name='compare', renderer='myproject:templates/search.mako')
 def my_view(request):
+
     product_name = request.GET.get('product')
     product_name_encode = product_name.encode('utf-8')
     nokaut_key = request.registry.settings.get('nokaut.key')
@@ -42,7 +43,7 @@ def my_view(request):
         model = Product()
         model.name = product_name
         model.user_id = request.user.id
-    elif (datetime.datetime.now() - product.time).days > 2:
+    elif request.is_xhr == True or (datetime.datetime.now() - product.time).days > 2:
         model = Product()
         model = product
         model.count += 1
@@ -147,8 +148,8 @@ def logout(request):
 
 @view_config(route_name='history', renderer='myproject:templates/history.mako')
 def history(request):
-    objs = DBSession.query(Product)\
-        .filter(Product.user_id == request.user.id)\
+    objs = DBSession.query(Product) \
+        .filter(Product.user_id == request.user.id) \
         .order_by(Product.time.desc()).all()
 
     return dict(
