@@ -1,23 +1,14 @@
 # -*- coding: utf-8 -*-
-
 import datetime
-import json
+import time
 
 from pyramid.response import Response
 from pyramid.view import view_config, forbidden_view_config
 from sqlalchemy.exc import DBAPIError
 from pyramid.exceptions import Forbidden
 from pyramid.security import Authenticated
-from .models import (
-    DBSession,
-    User,
-    Product,
-    )
-from pyramid.security import (
-    remember,
-    forget,
-    authenticated_userid
-    )
+from .models import DBSession, User, Product
+from pyramid.security import remember, forget, authenticated_userid
 from pyramid.httpexceptions import HTTPFound
 
 from nokaut.lib import nokaut_api, NokautError
@@ -89,16 +80,12 @@ def my_view(request):
 
 @view_config(renderer='json', route_name='history_jq')
 def history_jq(request):
-
     response_j = my_view(request)
+    DBSession.flush()
     return dict(
-        status=response_j['status'],
-        name=response_j['product'].name,
-        url_a=response_j['product'].url_a,
         price_a=response_j['product'].price_a,
-        url_n=response_j['product'].url_n,
         price_n=response_j['product'].price_n,
-        time=response_j['product'].time.ctime(),
+        timee=response_j['product'].time.strftime('%H:%M:%S  %d-%m-%Y'),
         count=response_j['product'].count
     )
 
