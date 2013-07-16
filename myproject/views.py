@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-
+import json
 
 from pyramid.response import Response
 from pyramid.view import view_config, forbidden_view_config
@@ -19,7 +19,6 @@ from pyramid.security import (
     authenticated_userid
     )
 from pyramid.httpexceptions import HTTPFound
-
 
 from nokaut.lib import nokaut_api, NokautError
 from allegro.lib import downolad_data, AllegroError
@@ -43,9 +42,10 @@ def my_view(request):
             status='NO_ITEM'
         )
 
-    product = DBSession.query(Product).filter(Product.name == product_name,
-                        Product.user_id == request.user.id).\
-                        order_by(Product.time.desc()).first()
+    product = DBSession.query(Product) \
+        .filter(Product.name == product_name) \
+        .filter(Product.user_id == request.user.id) \
+        .order_by(Product.time.desc()).first()
 
     if product is None:
         model = Product()
@@ -87,6 +87,22 @@ def my_view(request):
     )
 
 
+@view_config(renderer='json', route_name='history_jq')
+def history_jq(request):
+
+    response_j = my_view(request)
+    return dict(
+        status=response_j['status'],
+        name=response_j['product'].name,
+        url_a=response_j['product'].url_a,
+        price_a=response_j['product'].price_a,
+        url_n=response_j['product'].url_n,
+        price_n=response_j['product'].price_n,
+        time=response_j['product'].time.ctime(),
+        count=response_j['product'].count
+    )
+
+
 @view_config(route_name='register', renderer='myproject:templates/register.mako', permission='all')
 def register(request):
     form = RegisterForm(request.POST)
@@ -99,8 +115,10 @@ def register(request):
         DBSession.add(model)
         DBSession.flush()
         headers = remember(request, model.id)
-        return HTTPFound(location='/welcome',
-                         headers=headers)
+        return HTTPFound(
+            location='/welcome',
+            headers=headers
+        )
 
     return dict(
         form=form,
@@ -114,12 +132,16 @@ def login(request):
     if request.method == 'POST' and form.validate():
         login = form.login.data
         password = form.password.data
-        user = DBSession.query(User).filter(User.login == login)\
-                                    .filter(User.password == password)\
-                                    .first()
+        user = DBSession.query(User) \
+            .filter(User.login == login) \
+            .filter(User.password == password).first()
+
         headers = remember(request, user.id)
-        return HTTPFound(location='/welcome',
-                         headers=headers)
+        return HTTPFound(
+            location='/welcome',
+            headers=headers
+        )
+
     return dict(
         form=form,
     )
@@ -138,8 +160,10 @@ def logout(request):
 
 @view_config(route_name='history', renderer='myproject:templates/history.mako')
 def history(request):
-    objs = DBSession.query(Product).filter(
-        Product.user_id == request.user.id).order_by(Product.time.desc()).all()
+    objs = DBSession.query(Product)\
+        .filter(Product.user_id == request.user.id)\
+        .order_by(Product.time.desc()).all()
+
     return dict(
         objs=objs
     )
@@ -147,8 +171,10 @@ def history(request):
 
 @view_config(route_name='popular', renderer='myproject:templates/history.mako')
 def popular(request):
-    objs = DBSession.query(Product).filter(
-        Product.user_id == request.user.id).order_by(Product.count.desc())[:3]
+    objs = DBSession.query(Product) \
+               .filter(Product.user_id == request.user.id) \
+               .order_by(Product.count.desc())[:3]
+
     return dict(
         objs=objs
     )
