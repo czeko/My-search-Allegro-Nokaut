@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 import datetime
 import time
-import Image
+from PIL import Image, ImageDraw, ImageFont
 import urllib
 import os
-
+from math import atan, degrees
+import sys
 from pyramid.response import Response
 from pyramid.view import view_config, forbidden_view_config
 from sqlalchemy.exc import DBAPIError
@@ -73,9 +74,26 @@ def my_view(request):
     else:
         model.url_n = url_n
         model.price_n = price_n
+
     path = os.path.abspath(os.path.dirname(__file__))
     image_path = '%s/static/img/tmp/%s.jpg' % (path, product_name)
+    image_path_thum = '%s/static/img/tmp/t_%s.jpg' % (path, product_name)
     urllib.urlretrieve(img_url, image_path)
+    
+    im = Image.open(image_path)
+    im.thumbnail((36, 36))
+    im.save(image_path_thum, "JPEG")
+
+    FONT = '%s/static/img/Fonts/Ubuntu-LI.ttf' % path
+    img = Image.open(image_path).convert("RGB")
+    watermark = Image.new("RGBA", (img.size[0], img.size[1]))
+    draw = ImageDraw.ImageDraw(watermark, "RGBA")
+    font = ImageFont.truetype(FONT, 100)
+    draw.text((63,422), "Malwina", font=font, fill='#FF0000')
+    mask = watermark.convert("L").point(lambda x: min(x, 55))
+    watermark.putalpha(mask)
+    img.paste(watermark, None, watermark)
+    img.save(image_path, 'JPEG')
 
     DBSession.add(model)
 

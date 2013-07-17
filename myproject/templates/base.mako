@@ -4,6 +4,7 @@
     <title></title>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="${request.static_path('myproject:static/css/style.css')}">
+    <link rel="stylesheet" href="${request.static_path('myproject:static/css/lightbox.css')}">
 </head>
 <body>
     <div id="container">

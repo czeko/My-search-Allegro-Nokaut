@@ -16,7 +16,9 @@ requires = [
     'waitress',
     'nokaut',
     'allegro',
-    'wtforms'
+    'wtforms',
+    'pillow',
+
 
     ]
 dependency_links = [
