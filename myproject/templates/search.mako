@@ -8,6 +8,9 @@
             <div class="name_product">
                 ${product.name}
             </div>
+            <div class="box_photo">
+                <img src="${request.static_path('myproject:static/img/tmp/%s.jpg' % product.name)}" alt="img_demo"/>
+            </div>
         </div>
 
         <div class="main_box_right">

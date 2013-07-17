@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 import datetime
 import time
+import Image
+import urllib
+import os
 
 from pyramid.response import Response
 from pyramid.view import view_config, forbidden_view_config
@@ -63,13 +66,16 @@ def my_view(request):
         model.url_a = url_a
         model.price_a = price_a
     try:
-        price_n, url_n = nokaut_api(nokaut_key, product_name)
+        price_n, url_n, img_url = nokaut_api(nokaut_key, product_name)
     except NokautError as e:
         url_n = None
         price_n = None
     else:
         model.url_n = url_n
         model.price_n = price_n
+    path = os.path.abspath(os.path.dirname(__file__))
+    image_path = '%s/static/img/tmp/%s.jpg' % (path, product_name)
+    urllib.urlretrieve(img_url, image_path)
 
     DBSession.add(model)
 
